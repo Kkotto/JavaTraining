@@ -10,31 +10,14 @@ public enum Season {
     DECEMBER("December", COUNT_OF_DAYS_31);
 
     public final String name;
-    public String description;
-    public int countOfDays;
-
-    Season(String name){
-        this.name=name;
-    }
+    public final int countOfDays;
 
     Season(String name, int countOfDays){
         this.name=name;
         this.countOfDays=countOfDays;
     }
 
-    public String getName(){
-        return this.name;
-    }
-
-    public int getCountOfDays(){
-        return this.countOfDays;
-    }
-
-    public void setDescription(String description){
-        this.description=description;
-    }
-
-    public String getDescription(){
-        return this.description;
+    public String toString(){
+        return this.name()+" has "+this.countOfDays+" days.";
     }
 }
