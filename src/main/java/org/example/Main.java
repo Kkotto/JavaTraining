@@ -21,7 +21,7 @@ public class Main {
             } else {
                 System.out.print("Infant: ");
             }
-            System.out.println(person.toString());
+            System.out.println(person);
         }
     }
 }
