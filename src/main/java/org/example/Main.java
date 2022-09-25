@@ -21,7 +21,7 @@ public class Main {
             } else {
                 System.out.print("Infant: ");
             }
-            System.out.println(person.getName()+" "+person.getSurname()+" - "+person.getAge()+" yo");
+            System.out.println(person.toString());
         }
     }
 }
