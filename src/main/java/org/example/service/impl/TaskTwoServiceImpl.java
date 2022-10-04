@@ -16,8 +16,8 @@ public class TaskTwoServiceImpl implements TaskService {
     public void runTask() {
         Map<String, String> map = createMap();
         printMap(map);
-        System.out.println("The (first) longest key is '"+findLongestString(map.keySet())+"'; " +
-                "the (first) shortest value is '"+findShortestString(map.values())+"'");
+        System.out.printf("The first longest key is %s, the first shortest value is %s",
+                findLongestString(map.keySet()), findShortestString(map.values()));
     }
 
     public String createString(){
