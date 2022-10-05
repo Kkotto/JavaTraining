@@ -4,7 +4,6 @@ import org.example.model.Person;
 import org.example.service.TaskService;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TaskOneServiceImpl implements TaskService {
     private final int PEOPLE_QUANTITY = 100;
@@ -21,13 +20,11 @@ public class TaskOneServiceImpl implements TaskService {
                     "Surname" + random.nextInt(MAX_AGE),
                     random.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE));
         }
-        System.out.println(
-                people.stream().filter(person -> person.getAge() < SELECTED_AGE)
-                        .peek(System.out::println)
-                        .sorted(Comparator.comparing(Person::getSurname).thenComparing(Person::getName))
-                        .limit(4)
-                        .map(Person::getSurname)
-                        .collect(Collectors.toList())
-        );
+        people.stream().filter(person -> person.getAge() < SELECTED_AGE)
+                .peek(System.out::println)
+                .sorted(Comparator.comparing(Person::getSurname).thenComparing(Person::getName))
+                .limit(4)
+                .map(Person::getSurname).toList().forEach(System.out::println);
+
     }
 }
