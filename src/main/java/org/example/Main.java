@@ -1,10 +1,11 @@
 package org.example;
 
 import org.example.service.impl.TaskOneServiceImpl;
+import org.example.service.impl.TaskThreeServiceImpl;
 import org.example.service.impl.TaskTwoServiceImpl;
 
 public class Main {
     public static void main(String[] args) {
-        new TaskOneServiceImpl().runTask();
+        new TaskThreeServiceImpl().runTask();
     }
 }
