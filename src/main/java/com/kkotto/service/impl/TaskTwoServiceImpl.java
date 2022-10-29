@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -19,15 +18,12 @@ public class TaskTwoServiceImpl implements TaskService {
     private final String ORIGINAL_FILE_PATH = ORIGINAL_FILE_NAME;
     private final int MIN_LENGTH = 3;
     private final int MAX_LENGTH = 5;
-    private final String REGEX = "[.,*:;\s]";
-    //Стоит ли использовать Matcher & Pattern?
 
     @Override
     public void runTask() {
         File file = createFile(ORIGINAL_FILE_PATH);
         List<String> text = readFile(file);
         if (!text.isEmpty()) {
-            text = splitWords(text);
             List<String> words = deleteWords(text);
             File resultFile = createFile(RESULT_FILE_PATH);
             writeToFile(resultFile, words);
@@ -49,15 +45,15 @@ public class TaskTwoServiceImpl implements TaskService {
     }
 
     private List<String> readFile(File file) {
-        List<String> lines = new ArrayList<>();
+        List<String> words = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNext()) {
-                lines.add(scanner.nextLine());
+                words.add(scanner.next());
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return lines;
+        return words;
     }
 
     private void writeToFile(File file, List<String> list) {
@@ -68,17 +64,10 @@ public class TaskTwoServiceImpl implements TaskService {
         }
     }
 
-    private List<String> splitWords(List<String> lines) {
-        return lines
-                .stream()
-                .map(s -> (Arrays.toString(s.split(REGEX))))
-                .collect(Collectors.toList());
-    }
-
     private List<String> deleteWords(List<String> words) {
         return words
                 .stream()
-                .filter(s -> s.length() <= MIN_LENGTH || s.length() >= MAX_LENGTH)
+                .filter(s -> s.length() < MIN_LENGTH || s.length() > MAX_LENGTH)
                 .collect(Collectors.toList());
     }
 }
