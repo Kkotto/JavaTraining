@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class TaskOneServiceImpl implements TaskService {
-    private final String FILE_NAME = "Homework-4-task-1.txt";
+    private final String FILE_NAME = "Task-1.txt";
     private final String FILE_PATH = "src\\main\\java\\com\\kkotto\\" + FILE_NAME;
     //Как правильно прописывать имя, путь и т.д.? Меня смущает существование File.pathSeparator,
     // т.к. в разных системах разные сепараторы, что есть главная фишка Java - запуск везде,
