@@ -2,9 +2,7 @@ package com.kkotto.service.impl;
 
 import com.kkotto.service.TaskService;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,9 +27,7 @@ public class TaskOneServiceImpl implements TaskService {
         File file = createFile();
         List<Integer> list = createList();
         writeToFile(file, list);
-        System.out.println(list);
         int sum = countSum(list);
-        System.out.println(sum);
         writeToFile(file, sum);
     }
 
@@ -58,8 +54,8 @@ public class TaskOneServiceImpl implements TaskService {
     }
 
     private void writeToFile(File file, List<Integer> list) {
-        try {
-            Files.writeString(file.toPath(), list.toString());
+        try (FileWriter writer = new FileWriter(file, false)) {
+            writer.write(list.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -74,8 +70,8 @@ public class TaskOneServiceImpl implements TaskService {
     }
 
     private void writeToFile(File file, int number) {
-        try {
-            Files.writeString(file.toPath(), String.valueOf(number));
+        try (FileWriter writer = new FileWriter(file, true)) {
+            writer.write("\nSumma: " + number);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
