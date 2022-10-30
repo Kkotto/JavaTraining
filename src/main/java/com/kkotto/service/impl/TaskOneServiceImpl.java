@@ -9,12 +9,13 @@ import java.util.List;
 import java.util.Random;
 
 public class TaskOneServiceImpl implements TaskService {
-    private final String FILE_PATH =
-            String.format("src%1$s%1$smain%1$s%1$sjava%1$s%1$scom%1$s%1$skkotto%1$s%1$sTask-1.txt", File.separator);
+    private final String FILE_PATH = "src%1$s%1$smain%1$s%1$sjava%1$s%1$scom%1$s%1$skkotto%1$s%1$sTask-1.txt";
+    private final int MIN_VALUE = 0;
+    private final int MAX_VALUE = 100;
 
     @Override
     public void runTask() {
-        File originalFile = FileUtils.createFile(FILE_PATH);
+        File originalFile = FileUtils.createFile(String.format(FILE_PATH, FileUtils.FILE_SEPARATOR));
         List<Integer> listOfNumbers = createList();
         FileUtils.writeToFile(originalFile, listOfNumbers);
         int sumOfNumbers = countSum(listOfNumbers);
@@ -23,11 +24,10 @@ public class TaskOneServiceImpl implements TaskService {
 
     private List<Integer> createList() {
         Random random = new Random();
-        int maxValue = 100, minValue = 0;
-        int numberOfValues = random.nextInt(maxValue - minValue) + minValue;
+        int numberOfValues = random.nextInt(MAX_VALUE - MIN_VALUE) + MIN_VALUE;
         List<Integer> listOfNumbers = new ArrayList<>();
         for (int i = 0; i < numberOfValues; i++) {
-            listOfNumbers.add(random.nextInt(maxValue - minValue) + minValue);
+            listOfNumbers.add(random.nextInt(MAX_VALUE - MIN_VALUE) + MIN_VALUE);
         }
         return listOfNumbers;
     }

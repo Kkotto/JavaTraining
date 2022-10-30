@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileUtils {
+    public static final String FILE_SEPARATOR = File.separator;
+
     public static File createFile(String filePath) {
         File file = new File(filePath);
         try {
