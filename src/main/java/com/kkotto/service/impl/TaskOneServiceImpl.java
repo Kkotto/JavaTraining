@@ -14,27 +14,26 @@ public class TaskOneServiceImpl implements TaskService {
 
     @Override
     public void runTask() {
-        File collectionFile = FileUtils.createFile(FILE_PATH);
+        File originalFile = FileUtils.createFile(FILE_PATH);
         List<Integer> listOfNumbers = createList();
-        FileUtils.writeToFile(collectionFile, listOfNumbers);
-        int sum = countSum(listOfNumbers);
-        FileUtils.writeToFile(collectionFile, sum);
+        FileUtils.writeToFile(originalFile, listOfNumbers);
+        int sumOfNumbers = countSum(listOfNumbers);
+        FileUtils.writeToFile(originalFile, sumOfNumbers);
     }
 
     private List<Integer> createList() {
         Random random = new Random();
         int maxValue = 100, minValue = 0;
         int numberOfValues = random.nextInt(maxValue - minValue) + minValue;
-        List<Integer> list = new ArrayList<>();
+        List<Integer> listOfNumbers = new ArrayList<>();
         for (int i = 0; i < numberOfValues; i++) {
-            list.add(random.nextInt(maxValue - minValue) + minValue);
+            listOfNumbers.add(random.nextInt(maxValue - minValue) + minValue);
         }
-        return list;
+        return listOfNumbers;
     }
 
-
-    private int countSum(List<Integer> list) {
-        return list.stream()
+    private int countSum(List<Integer> listOfNumbers) {
+        return listOfNumbers.stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,9 +20,19 @@ public class FileUtils {
                 System.out.println(file.getName() + " already exists.");
             }
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return file;
+    }
+
+    public static void createDirectories(Path directoryPath) {
+        try {
+            Files.createDirectories(directoryPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     public static List<String> readFile(File file) {
@@ -30,6 +42,7 @@ public class FileUtils {
                 words.add(scanner.next());
             }
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return words;
@@ -39,6 +52,7 @@ public class FileUtils {
         try (FileWriter writer = new FileWriter(file, false)) {
             writer.write(list.toString());
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -51,5 +65,4 @@ public class FileUtils {
             throw new RuntimeException(e);
         }
     }
-
 }
