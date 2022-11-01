@@ -1,6 +1,6 @@
 package com.kkotto.service.impl;
 
-import com.kkotto.model.FileUtils;
+import com.kkotto.service.FileUtils;
 import com.kkotto.service.TaskService;
 
 import java.io.*;

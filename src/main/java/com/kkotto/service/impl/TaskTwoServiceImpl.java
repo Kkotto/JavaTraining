@@ -1,7 +1,7 @@
 package com.kkotto.service.impl;
 
 import com.kkotto.service.TaskService;
-import com.kkotto.model.FileUtils;
+import com.kkotto.service.FileUtils;
 
 import java.io.File;
 import java.util.List;
@@ -17,7 +17,7 @@ public class TaskTwoServiceImpl implements TaskService {
     @Override
     public void runTask() {
         File originalFile = FileUtils.createFile(ORIGINAL_FILE_PATH);
-        List<String> textFromFile = FileUtils.readFile(originalFile);
+        List<String> textFromFile = FileUtils.readFileByWords(originalFile);
         if (!textFromFile.isEmpty()) {
             textFromFile = deleteWords(textFromFile);
             File resultFile = FileUtils.createFile(String.format(RESULT_FILE_PATH, FileUtils.FILE_SEPARATOR));

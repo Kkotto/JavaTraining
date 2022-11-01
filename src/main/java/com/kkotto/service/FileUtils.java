@@ -1,4 +1,4 @@
-package com.kkotto.model;
+package com.kkotto.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,7 +37,7 @@ public class FileUtils {
         }
     }
 
-    public static List<String> readFile(File file) {
+    public static List<String> readFileByWords(File file) {
         List<String> words = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNext()) {
@@ -48,6 +48,19 @@ public class FileUtils {
             throw new RuntimeException(e);
         }
         return words;
+    }
+
+    public static List<String> readFileByLines(File file) {
+        List<String> lines = new ArrayList<>();
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNext()) {
+                lines.add(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return lines;
     }
 
     public static void writeToFile(File file, List<?> list) {
@@ -62,6 +75,15 @@ public class FileUtils {
     public static void writeToFile(File file, int number) {
         try (FileWriter writer = new FileWriter(file, true)) {
             writer.write("\nSumma: " + number);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void writeToFile(File file, String text) {
+        try (FileWriter writer = new FileWriter(file, false)) {
+            writer.write(text);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
