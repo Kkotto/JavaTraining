@@ -7,23 +7,24 @@ public class Product {
     private int count;
     private String production;
 
-    public void setName(String name) {
+    public Product() {
+
+    }
+
+    public Product(String name, String uniqueNumber, int price, int count, String production) {
         this.name = name;
-    }
-
-    public void setUniqueNumber(String uniqueNumber) {
         this.uniqueNumber = uniqueNumber;
-    }
-
-    public void setPrice(int price) {
         this.price = price;
-    }
-
-    public void setCount(int count) {
         this.count = count;
+        this.production = production;
     }
 
-    public void setProduction(String production) {
-        this.production = production;
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s; %s; %d; %d; %s.", this.name, this.uniqueNumber, this.price, this.count, this.production);
     }
 }
