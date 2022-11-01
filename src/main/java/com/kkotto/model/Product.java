@@ -19,6 +19,26 @@ public class Product {
         this.production = production;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUniqueNumber(String uniqueNumber) {
+        this.uniqueNumber = uniqueNumber;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setProduction(String production) {
+        this.production = production;
+    }
+
     public int getPrice() {
         return price;
     }
