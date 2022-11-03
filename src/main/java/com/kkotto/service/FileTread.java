@@ -7,8 +7,6 @@ import java.time.format.FormatStyle;
 import java.util.List;
 
 public class FileTread extends Thread {
-    private final String FILE_PATH = "src%1$s%1$smain%1$s%1$sjava%1$s%1$scom%1$s%1$skkotto%1$s%1$staskFiles%1$s%1$s";
-    private final String FILENAME_EXTENSION = ".txt";
     private final int NUMBERS_QUANTITY = 10;
     private final int MIN_VALUE = 0;
     private final int MAX_VALUE = 100;
@@ -19,7 +17,7 @@ public class FileTread extends Thread {
 
     public void run() {
         String threadName = Thread.currentThread().getName();
-        String fileName = FILE_PATH + threadName + FILENAME_EXTENSION;
+        String fileName = FileUtils.FILE_PATH_ALL_TASKS + threadName + FileUtils.FILENAME_EXTENSION;
         File fileForThread = FileUtils.createFile(String.format(fileName, FileUtils.FILE_SEPARATOR));
         List<Integer> listOfNumbers = ListUtils.createIntegerList(NUMBERS_QUANTITY, MIN_VALUE, MAX_VALUE);
         FileUtils.writeToFile(fileForThread, listOfNumbers);
