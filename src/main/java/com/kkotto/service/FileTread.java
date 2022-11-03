@@ -7,7 +7,7 @@ import java.time.format.FormatStyle;
 import java.util.List;
 
 public class FileTread extends Thread {
-    private final String filePath = "src%1$s%1$smain%1$s%1$sjava%1$s%1$scom%1$s%1$skkotto%1$s%1$s";
+    private final String filePath = "src%1$s%1$smain%1$s%1$sjava%1$s%1$scom%1$s%1$skkotto%1$s%1$staskFiles%1$s%1$s";
     private final String filenameExtension = ".txt";
     private final int NUMBERS_QUANTITY = 10;
     private final int MIN_VALUE = 0;
