@@ -19,4 +19,19 @@ public class ListUtils {
                 .max(Integer::compareTo)
                 .orElse(0);
     }
+
+    public static List<String> generateStrings(int stringsQuantity) {
+        Random random = new Random();
+        String stringTemplate = "С:\\WebServers\\home\\testsite\\www\\myfile";
+        String filenameExtension = ".txt";
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < stringsQuantity; i++) {
+            StringBuilder tempString = new StringBuilder(stringTemplate).append(random.nextInt());
+            if (random.nextBoolean()) {
+                tempString.append(filenameExtension);
+            }
+            stringList.add(tempString.toString());
+        }
+        return stringList;
+    }
 }
