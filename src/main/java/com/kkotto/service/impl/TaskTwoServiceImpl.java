@@ -13,9 +13,8 @@ public class TaskTwoServiceImpl implements TaskService {
 
     @Override
     public void runTask() {
-        File fileForGeneratedStrings = FileUtils.createFile(String.format(
-                FileUtils.FILE_PATH_ALL_TASKS + TASK_NAME + FileUtils.FILENAME_EXTENSION,
-                FileUtils.FILE_SEPARATOR));
+        String generatedStringsFileName = FileUtils.FILE_PATH_ALL_TASKS + TASK_NAME + FileUtils.FILENAME_EXTENSION;
+        File fileForGeneratedStrings = FileUtils.createFile(String.format(generatedStringsFileName, FileUtils.FILE_SEPARATOR));
         FileUtils.writeToFileByLines(fileForGeneratedStrings, ListUtils.generateStrings(STRINGS_QUANTITY));
         new ParsingStringsThread(TASK_NAME).start();
     }
