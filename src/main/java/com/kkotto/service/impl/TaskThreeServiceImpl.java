@@ -10,7 +10,6 @@ public class TaskThreeServiceImpl implements TaskService {
     private static TaskThreeServiceImpl instance;
 
     private TaskThreeServiceImpl() {
-
     }
 
     public static TaskThreeServiceImpl getInstance() {

@@ -51,7 +51,7 @@ public class DateTimeUtils {
         return random.nextInt(maxHoursLength - minHoursLength + 1) + minHoursLength;
     }
 
-    public static Calendar createCalendar(int year, int month, int day, int hour, int minute){
+    public static Calendar createCalendar(int year, int month, int day, int hour, int minute) {
         Calendar calendar = new GregorianCalendar();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);

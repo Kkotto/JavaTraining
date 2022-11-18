@@ -14,7 +14,6 @@ public class TaskTwoServiceImpl implements TaskService {
     private static TaskTwoServiceImpl instance;
 
     private TaskTwoServiceImpl() {
-
     }
 
     public static TaskTwoServiceImpl getInstance() {
