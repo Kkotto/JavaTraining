@@ -11,6 +11,18 @@ import java.util.stream.Collectors;
 
 public class TaskTwoServiceImpl implements TaskService {
     private final int PEOPLE_QUANTITY = 10;
+    private static TaskTwoServiceImpl instance;
+
+    private TaskTwoServiceImpl() {
+
+    }
+
+    public static TaskTwoServiceImpl getInstance() {
+        if (instance == null) {
+            instance = new TaskTwoServiceImpl();
+        }
+        return instance;
+    }
 
     @Override
     public void runTask() {

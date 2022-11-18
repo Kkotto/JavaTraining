@@ -7,6 +7,19 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class TaskThreeServiceImpl implements TaskService {
+    private static TaskThreeServiceImpl instance;
+
+    private TaskThreeServiceImpl() {
+
+    }
+
+    public static TaskThreeServiceImpl getInstance() {
+        if (instance == null) {
+            instance = new TaskThreeServiceImpl();
+        }
+        return instance;
+    }
+
     @Override
     public void runTask() {
         int generatedYear = DateTimeUtils.generateYear();

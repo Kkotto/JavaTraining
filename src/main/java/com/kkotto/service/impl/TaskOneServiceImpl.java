@@ -9,6 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskOneServiceImpl implements TaskService {
+    private static TaskOneServiceImpl instance;
+
+    private TaskOneServiceImpl() {
+
+    }
+
+    public static TaskOneServiceImpl getInstance() {
+        if (instance == null) {
+            instance = new TaskOneServiceImpl();
+        }
+        return instance;
+    }
+
     @Override
     public void runTask() {
         ListFactory listFactory = new ListFactory();

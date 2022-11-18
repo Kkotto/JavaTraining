@@ -11,9 +11,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<TaskService> listOfTasks = new ArrayList<>();
-        listOfTasks.add(new TaskOneServiceImpl());
-        listOfTasks.add(new TaskTwoServiceImpl());
-        listOfTasks.add(new TaskThreeServiceImpl());
+        listOfTasks.add(TaskOneServiceImpl.getInstance());
+        listOfTasks.add(TaskTwoServiceImpl.getInstance());
+        listOfTasks.add(TaskThreeServiceImpl.getInstance());
         listOfTasks.forEach(TaskService::runTask);
     }
 }

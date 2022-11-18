@@ -5,16 +5,16 @@ public class Person {
     private String surname;
     private int bornYear;
 
+    public int getBornYear() {
+        return bornYear;
+    }
+
     @Override
     public String toString() {
         StringBuilder resultPersonInfo = new StringBuilder();
         if (name != null) resultPersonInfo.append(name);
         if (surname != null) resultPersonInfo.append(" ").append(surname);
         return resultPersonInfo.toString();
-    }
-
-    public int getBornYear() {
-        return bornYear;
     }
 
     public static class Builder {
