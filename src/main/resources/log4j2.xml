@@ -1,0 +1,20 @@
+<Configuration status="WARN">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="kkotto" level="debug" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Root level="all">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+
+</Configuration>
