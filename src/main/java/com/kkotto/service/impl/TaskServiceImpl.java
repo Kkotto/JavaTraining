@@ -3,13 +3,13 @@ package com.kkotto.service.impl;
 import com.kkotto.consts.TrafficDataFileParams;
 import com.kkotto.model.TrafficData;
 import com.kkotto.service.TaskService;
-import com.kkotto.util.FileUtil;
+import com.kkotto.utils.FileUtil;
+import com.kkotto.utils.ListUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TaskServiceImpl implements TaskService {
@@ -30,49 +30,19 @@ public class TaskServiceImpl implements TaskService {
     public void runTask() {
         File trafficDataFile = new File(TrafficDataFileParams.TRAFFIC_DATA_FILE_PATH);
         List<String> fileRecords = FileUtil.readFileByLines(trafficDataFile);
-        List<TrafficData> trafficData = readTrafficRecords(fileRecords);
-        for (TrafficData dataRecord : trafficData) {
+        List<TrafficData> trafficDataList = createTrafficDataList(fileRecords);
+        for (TrafficData dataRecord : trafficDataList) {
             logger.info(dataRecord);
         }
     }
 
-    private List<TrafficData> readTrafficRecords(List<String> fileRecords) {
+    private List<TrafficData> createTrafficDataList(List<String> fileRecords) {
         List<TrafficData> trafficData = new ArrayList<>();
         for (String record : fileRecords) {
-            List<String> recordArguments = readArgumentsInRecord(record);
-            trafficData.add(buildTrafficData(recordArguments));
+            List<String> argumentsInRecord = ListUtil.splitArgumentsInRecord(record);
+            trafficData.add(buildTrafficData(argumentsInRecord));
         }
         return trafficData;
-    }
-
-    private List<String> readArgumentsInRecord(String record) {
-        List<String> recordArguments;
-        if (record.contains(TrafficDataFileParams.RECORD_COMPLEX_FIELD_REGEX)) {
-            recordArguments = readComplexRow(record);
-        } else {
-            recordArguments = Arrays.asList(record.split(TrafficDataFileParams.RECORDS_SPLIT_REGEX));
-        }
-        return recordArguments;
-    }
-
-    private List<String> readComplexRow(String complexRecord) {
-        String complexRegex = TrafficDataFileParams.RECORD_COMPLEX_FIELD_REGEX;
-        String splitRegex = TrafficDataFileParams.RECORDS_SPLIT_REGEX;
-        int includeLastElementToBound = 1;
-        StringBuilder stringBuilder = new StringBuilder(complexRecord);
-        List<String> recordArguments = new ArrayList<>();
-        while (stringBuilder.indexOf(splitRegex) > 0) {
-            if (stringBuilder.indexOf(complexRegex) == 0) {
-                stringBuilder.delete(stringBuilder.indexOf(complexRegex), includeLastElementToBound);
-                recordArguments.add(stringBuilder.substring(0, stringBuilder.indexOf(complexRegex)));
-                stringBuilder.delete(0, stringBuilder.indexOf(complexRegex) + includeLastElementToBound);
-            } else {
-                recordArguments.add(stringBuilder.substring(0, stringBuilder.indexOf(splitRegex)));
-            }
-            stringBuilder.delete(0, stringBuilder.indexOf(splitRegex) + includeLastElementToBound);
-        }
-        recordArguments.add(stringBuilder.toString());
-        return recordArguments;
     }
 
     private TrafficData buildTrafficData(List<String> recordArguments) {

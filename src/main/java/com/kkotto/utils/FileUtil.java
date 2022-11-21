@@ -1,4 +1,4 @@
-package com.kkotto.util;
+package com.kkotto.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
