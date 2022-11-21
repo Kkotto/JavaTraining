@@ -9,8 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TaskServiceImpl implements TaskService {
     private static TaskServiceImpl instance;
@@ -30,10 +29,24 @@ public class TaskServiceImpl implements TaskService {
     public void runTask() {
         File trafficDataFile = new File(TrafficDataFileParams.TRAFFIC_DATA_FILE_PATH);
         List<String> fileRecords = FileUtils.readFileByLines(trafficDataFile);
+        fileRecords = ListUtils.removeHeader(fileRecords);
         List<TrafficData> trafficDataList = createTrafficDataList(fileRecords);
-        for (TrafficData dataRecord : trafficDataList) {
-            logger.info(dataRecord);
+        logger.info(countLimitTypesActivities(trafficDataList));
+    }
+
+    private Map<String, Integer> countLimitTypesActivities(List<TrafficData> trafficDataList) {
+        Map<String, Integer> uniqueLimitTypes = new HashMap<>();
+        int startValue = 1;
+        for (TrafficData trafficData : trafficDataList) {
+            String limitTypeName = trafficData.getLimitTypeName();
+            if (uniqueLimitTypes.containsKey(limitTypeName)) {
+                int limitsAmount = uniqueLimitTypes.get(limitTypeName);
+                uniqueLimitTypes.put(limitTypeName, ++limitsAmount);
+            } else {
+                uniqueLimitTypes.put(limitTypeName, startValue);
+            }
         }
+        return uniqueLimitTypes;
     }
 
     private List<TrafficData> createTrafficDataList(List<String> fileRecords) {

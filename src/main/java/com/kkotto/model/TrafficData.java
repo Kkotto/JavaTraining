@@ -7,6 +7,10 @@ public class TrafficData {
     private String limitRemovalDate;
     private String termClarification;
 
+    public String getLimitTypeName() {
+        return limitTypeName;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %s %s %s",
