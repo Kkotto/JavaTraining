@@ -1,4 +1,4 @@
-package com.kkotto.utils;
+package com.kkotto.service.utils;
 
 import com.kkotto.consts.TrafficDataFileParams;
 
@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListUtil {
-
+public class ListUtils {
     public static List<String> splitArgumentsInRecord(String record) {
         List<String> recordArguments;
         if (record.contains(TrafficDataFileParams.RECORD_COMPLEX_FIELD_REGEX)) {

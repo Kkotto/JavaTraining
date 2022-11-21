@@ -3,8 +3,8 @@ package com.kkotto.service.impl;
 import com.kkotto.consts.TrafficDataFileParams;
 import com.kkotto.model.TrafficData;
 import com.kkotto.service.TaskService;
-import com.kkotto.utils.FileUtil;
-import com.kkotto.utils.ListUtil;
+import com.kkotto.service.utils.FileUtils;
+import com.kkotto.service.utils.ListUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void runTask() {
         File trafficDataFile = new File(TrafficDataFileParams.TRAFFIC_DATA_FILE_PATH);
-        List<String> fileRecords = FileUtil.readFileByLines(trafficDataFile);
+        List<String> fileRecords = FileUtils.readFileByLines(trafficDataFile);
         List<TrafficData> trafficDataList = createTrafficDataList(fileRecords);
         for (TrafficData dataRecord : trafficDataList) {
             logger.info(dataRecord);
@@ -39,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
     private List<TrafficData> createTrafficDataList(List<String> fileRecords) {
         List<TrafficData> trafficData = new ArrayList<>();
         for (String record : fileRecords) {
-            List<String> argumentsInRecord = ListUtil.splitArgumentsInRecord(record);
+            List<String> argumentsInRecord = ListUtils.splitArgumentsInRecord(record);
             trafficData.add(buildTrafficData(argumentsInRecord));
         }
         return trafficData;
