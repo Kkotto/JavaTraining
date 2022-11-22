@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TaskServiceImpl implements TaskService {
     private static TaskServiceImpl instance;
@@ -32,6 +33,9 @@ public class TaskServiceImpl implements TaskService {
         fileRecords = ListUtils.removeHeader(fileRecords);
         List<TrafficData> trafficDataList = createTrafficDataList(fileRecords);
         logger.info(countLimitTypesActivities(trafficDataList));
+        File resultCustomersFile = new File(TrafficDataFileParams.RESULT_CUSTOMER_FILE_PATH);
+        List<String> customerNames = findCustomersByLimits(trafficDataList, TrafficDataFileParams.LIMIT_TYPE_LIMIT_MOVEMENT);
+        FileUtils.writeToFile(resultCustomersFile, customerNames);
     }
 
     private Map<String, Integer> countLimitTypesActivities(List<TrafficData> trafficDataList) {
@@ -47,6 +51,14 @@ public class TaskServiceImpl implements TaskService {
             }
         }
         return uniqueLimitTypes;
+    }
+
+    private List<String> findCustomersByLimits(List<TrafficData> trafficDataList, String limitTypeName) {
+        return trafficDataList.stream()
+                .filter(trafficData -> trafficData.getLimitTypeName().equals(limitTypeName))
+                .map(TrafficData::getCustomerName)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private List<TrafficData> createTrafficDataList(List<String> fileRecords) {

@@ -11,6 +11,10 @@ public class TrafficData {
         return limitTypeName;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %s %s %s",
