@@ -19,6 +19,10 @@ public class TrafficData {
         return termClarification;
     }
 
+    public String getWorkTypeName() {
+        return workTypeName;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %s %s %s",

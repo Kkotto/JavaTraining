@@ -24,9 +24,9 @@ public class TrafficDataUtils {
         return trafficData;
     }
 
-    public static List<String> findCustomersByLimitType(List<TrafficData> trafficDataList, String limitTypeName) {
+    public static List<String> findCustomersByWorkType(List<TrafficData> trafficDataList, String workTypeName) {
         return trafficDataList.stream()
-                .filter(trafficData -> trafficData.getLimitTypeName().equals(limitTypeName))
+                .filter(trafficData -> trafficData.getWorkTypeName().equals(workTypeName))
                 .map(TrafficData::getCustomerName)
                 .distinct()
                 .collect(Collectors.toList());
