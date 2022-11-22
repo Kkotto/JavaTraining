@@ -7,11 +7,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ListUtils {
-    public static List<String> removeHeader(List<String> records) {
+    private static ListUtils instance;
+
+    private ListUtils() {
+    }
+
+    public static ListUtils getInstance() {
+        if (instance == null) {
+            instance = new ListUtils();
+        }
+        return instance;
+    }
+
+    public List<String> removeHeader(List<String> records) {
         return records.subList(1, records.size());
     }
 
-    public static List<String> splitArgumentsInRecord(String record) {
+    public List<String> splitArgumentsInRecord(String record) {
         List<String> recordArguments;
         if (record.contains(TrafficDataFileParams.RECORD_COMPLEX_FIELD_REGEX)) {
             recordArguments = splitComplexRecord(record);
@@ -21,7 +33,7 @@ public class ListUtils {
         return recordArguments;
     }
 
-    public static List<String> splitComplexRecord(String complexRecord) {
+    public List<String> splitComplexRecord(String complexRecord) {
         String complexRegex = TrafficDataFileParams.RECORD_COMPLEX_FIELD_REGEX;
         String splitRegex = TrafficDataFileParams.RECORDS_SPLIT_REGEX;
         int includeLastElementToBound = 1;

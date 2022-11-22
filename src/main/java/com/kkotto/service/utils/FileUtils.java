@@ -13,8 +13,19 @@ import java.util.Scanner;
 
 public class FileUtils {
     static final Logger logger = LogManager.getLogger(FileUtils.class);
+    private static FileUtils instance;
 
-    public static void writeToFile(File file, List<String> list) {
+    private FileUtils() {
+    }
+
+    public static FileUtils getInstance() {
+        if (instance == null) {
+            instance = new FileUtils();
+        }
+        return instance;
+    }
+
+    public void writeToFile(File file, List<String> list) {
         if (!file.exists()) {
             file = createFile(file.getPath());
         }
@@ -27,7 +38,7 @@ public class FileUtils {
         }
     }
 
-    public static File createFile(String filePath) {
+    public File createFile(String filePath) {
         File file = new File(filePath);
         try {
             if (file.createNewFile()) {
@@ -41,7 +52,7 @@ public class FileUtils {
         return file;
     }
 
-    public static List<String> readFileByLines(File file) {
+    public List<String> readFileByLines(File file) {
         List<String> lines = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNext()) {
