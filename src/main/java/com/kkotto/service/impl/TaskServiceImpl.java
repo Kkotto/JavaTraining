@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
 
     private void writeUniqueCustomersToFile(List<TrafficData> trafficDataList) {
         File resultCustomersFile = new File(TrafficDataFileParams.RESULT_CUSTOMER_FILE_PATH);
-        List<String> customerNames = TrafficDataUtils.findCustomersByLimits(trafficDataList, TrafficDataFileParams.LIMIT_TYPE_LIMIT_MOVEMENT);
+        List<String> customerNames = TrafficDataUtils.findCustomersByLimitType(trafficDataList, TrafficDataFileParams.LIMIT_TYPE_LIMIT_MOVEMENT);
         FileUtils.writeToFile(resultCustomersFile, customerNames);
     }
 

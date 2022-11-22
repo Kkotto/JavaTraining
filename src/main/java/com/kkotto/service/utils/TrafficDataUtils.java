@@ -24,7 +24,7 @@ public class TrafficDataUtils {
         return trafficData;
     }
 
-    public static List<String> findCustomersByLimits(List<TrafficData> trafficDataList, String limitTypeName) {
+    public static List<String> findCustomersByLimitType(List<TrafficData> trafficDataList, String limitTypeName) {
         return trafficDataList.stream()
                 .filter(trafficData -> trafficData.getLimitTypeName().equals(limitTypeName))
                 .map(TrafficData::getCustomerName)
@@ -38,8 +38,8 @@ public class TrafficDataUtils {
         return customerNames.subList(0, topValue);
     }
 
-    public static List<String> sortCustomersByTermValue(Map<String, Integer> customersClarifications) {
-        List<Map.Entry<String, Integer>> customersEntry = customersClarifications.entrySet().stream()
+    public static List<String> sortCustomersByTermValue(Map<String, Integer> customersClarificationsAmount) {
+        List<Map.Entry<String, Integer>> customersEntry = customersClarificationsAmount.entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .toList();
         List<String> keySet = new ArrayList<>();
