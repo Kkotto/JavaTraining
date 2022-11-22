@@ -23,6 +23,14 @@ public class TrafficData {
         return workTypeName;
     }
 
+    public String getLimitRemovalDate() {
+        return limitRemovalDate;
+    }
+
+    public void setLimitRemovalDate(String limitRemovalDate) {
+        this.limitRemovalDate = limitRemovalDate;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %s %s %s",

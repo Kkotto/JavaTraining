@@ -31,6 +31,7 @@ public class TaskServiceImpl implements TaskService {
         logger.info(TrafficDataUtils.countLimitTypesActivities(trafficDataList));
         writeUniqueCustomersToFile(trafficDataList);
         writeTopCustomersToFile(trafficDataList);
+        writeRecordsInPeriod(trafficDataList);
     }
 
     private void writeUniqueCustomersToFile(List<TrafficData> trafficDataList) {
@@ -43,5 +44,15 @@ public class TaskServiceImpl implements TaskService {
         File resultTopCustomersFile = new File(TrafficDataFileParams.RESULT_TOP_CUSTOMERS_FILE_PATH);
         List<String> customerNames = TrafficDataUtils.findTopCustomersByTermClarifications(trafficDataList, TrafficDataFileParams.TOP_CUSTOMERS_VALUE);
         FileUtils.writeToFile(resultTopCustomersFile, customerNames);
+    }
+
+    private void writeRecordsInPeriod(List<TrafficData> trafficDataList) {
+        File historyFile = new File(TrafficDataFileParams.RESULT_HISTORY_FILE_PATH);
+        TrafficDataUtils.parseDate(trafficDataList);
+        List<TrafficData> trafficData = TrafficDataUtils.findRecordsInDateBounds(trafficDataList, TrafficDataFileParams.START_WORK_DATE, TrafficDataFileParams.END_WORK_DATE);
+        List<String> customerNames = trafficData.stream()
+                .map(TrafficData::getCustomerName)
+                .toList();
+        FileUtils.writeToFile(historyFile, customerNames);
     }
 }

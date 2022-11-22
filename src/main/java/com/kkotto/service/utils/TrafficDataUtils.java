@@ -4,6 +4,8 @@ import com.kkotto.consts.TrafficDataFileParams;
 import com.kkotto.model.TrafficData;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,7 +17,7 @@ public class TrafficDataUtils {
         return fillTrafficDataList(fileRecords);
     }
 
-    private static List<TrafficData> fillTrafficDataList(List<String> fileRecords) {
+    public static List<TrafficData> fillTrafficDataList(List<String> fileRecords) {
         List<TrafficData> trafficData = new ArrayList<>();
         for (String record : fileRecords) {
             List<String> argumentsInRecord = ListUtils.splitArgumentsInRecord(record);
@@ -49,7 +51,7 @@ public class TrafficDataUtils {
         return keySet;
     }
 
-    private static Map<String, Integer> countCustomersTermClarifications(List<TrafficData> trafficDataList) {
+    public static Map<String, Integer> countCustomersTermClarifications(List<TrafficData> trafficDataList) {
         Map<String, Integer> customersClarificationAmount = new HashMap<>();
         int startValue = 1;
         for (TrafficData trafficData : trafficDataList) {
@@ -81,7 +83,22 @@ public class TrafficDataUtils {
         return uniqueLimitTypes;
     }
 
-    private static TrafficData buildTrafficData(List<String> recordArguments) {
+    public static List<TrafficData> findRecordsInDateBounds(List<TrafficData> trafficDataList, LocalDate startDate, LocalDate endDate) {
+        List<TrafficData> filteredRecords = new ArrayList<>();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(TrafficDataFileParams.DATE_FORMAT);
+        for (TrafficData trafficData : trafficDataList) {
+            String trafficDataDate = trafficData.getLimitRemovalDate();
+            if (!trafficDataDate.equals(TrafficDataFileParams.NO_INFO_RECORD_VALUE)) {
+                LocalDate recordDate = LocalDate.parse(trafficDataDate, dateFormat);
+                if (recordDate.isAfter(startDate) && recordDate.isBefore(endDate)) {
+                    filteredRecords.add(trafficData);
+                }
+            }
+        }
+        return filteredRecords;
+    }
+
+    public static TrafficData buildTrafficData(List<String> recordArguments) {
         String customerName = recordArguments.get(TrafficDataFileParams.CUSTOMER_NAME_COLUMN_NUMBER);
         String limitTypeName = recordArguments.get(TrafficDataFileParams.LIMIT_TYPE_NAME_COLUMN_NUMBER);
         String workTypeName = recordArguments.get(TrafficDataFileParams.WORK_TYPE_NAME_COLUMN_NUMBER);
@@ -94,5 +111,22 @@ public class TrafficDataUtils {
                 .addLimitRemovalDay(limitRemovalDate)
                 .addTermClarification(termClarification)
                 .build();
+    }
+
+    public static void parseDate(List<TrafficData> trafficDataList) {
+        int yearLength = 4, monthLength = 2;
+        String dateSeparator = "/";
+        for (TrafficData trafficData : trafficDataList) {
+            String date = trafficData.getLimitRemovalDate();
+            if (!date.equals(TrafficDataFileParams.NO_INFO_RECORD_VALUE) && !date.matches(TrafficDataFileParams.DATE_FORMAT)) {
+                StringBuilder dateBuilder = new StringBuilder();
+                dateBuilder.append(date, 0, yearLength)
+                        .append(dateSeparator)
+                        .append(date, yearLength, yearLength + monthLength)
+                        .append(dateSeparator)
+                        .append(date.substring(yearLength + monthLength));
+                trafficData.setLimitRemovalDate(dateBuilder.toString());
+            }
+        }
     }
 }
