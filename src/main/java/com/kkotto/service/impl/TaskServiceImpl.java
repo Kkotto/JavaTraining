@@ -30,11 +30,18 @@ public class TaskServiceImpl implements TaskService {
         List<TrafficData> trafficDataList = TrafficDataUtils.generateTrafficDataList();
         logger.info(TrafficDataUtils.countLimitTypesActivities(trafficDataList));
         writeUniqueCustomersToFile(trafficDataList);
+        writeTopCustomersToFile(trafficDataList);
     }
 
     private void writeUniqueCustomersToFile(List<TrafficData> trafficDataList) {
         File resultCustomersFile = new File(TrafficDataFileParams.RESULT_CUSTOMER_FILE_PATH);
         List<String> customerNames = TrafficDataUtils.findCustomersByLimits(trafficDataList, TrafficDataFileParams.LIMIT_TYPE_LIMIT_MOVEMENT);
         FileUtils.writeToFile(resultCustomersFile, customerNames);
+    }
+
+    private void writeTopCustomersToFile(List<TrafficData> trafficDataList) {
+        File resultTopCustomersFile = new File(TrafficDataFileParams.RESULT_TOP_CUSTOMERS_FILE_PATH);
+        List<String> customerNames = TrafficDataUtils.findTopCustomersByTerm(trafficDataList, TrafficDataFileParams.TOP_CUSTOMERS_VALUE);
+        FileUtils.writeToFile(resultTopCustomersFile, customerNames);
     }
 }
