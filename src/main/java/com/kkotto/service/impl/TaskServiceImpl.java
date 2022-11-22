@@ -28,14 +28,39 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void runTask() {
+        List<TrafficData> trafficDataList = generateTrafficDataList();
+        logger.info(countLimitTypesActivities(trafficDataList));
+        writeUniqueCustomersToFile(trafficDataList);
+    }
+
+    private List<TrafficData> generateTrafficDataList() {
         File trafficDataFile = new File(TrafficDataFileParams.TRAFFIC_DATA_FILE_PATH);
         List<String> fileRecords = FileUtils.readFileByLines(trafficDataFile);
         fileRecords = ListUtils.removeHeader(fileRecords);
-        List<TrafficData> trafficDataList = createTrafficDataList(fileRecords);
-        logger.info(countLimitTypesActivities(trafficDataList));
+        return fillTrafficDataList(fileRecords);
+    }
+
+    private List<TrafficData> fillTrafficDataList(List<String> fileRecords) {
+        List<TrafficData> trafficData = new ArrayList<>();
+        for (String record : fileRecords) {
+            List<String> argumentsInRecord = ListUtils.splitArgumentsInRecord(record);
+            trafficData.add(buildTrafficData(argumentsInRecord));
+        }
+        return trafficData;
+    }
+
+    private void writeUniqueCustomersToFile(List<TrafficData> trafficDataList) {
         File resultCustomersFile = new File(TrafficDataFileParams.RESULT_CUSTOMER_FILE_PATH);
         List<String> customerNames = findCustomersByLimits(trafficDataList, TrafficDataFileParams.LIMIT_TYPE_LIMIT_MOVEMENT);
         FileUtils.writeToFile(resultCustomersFile, customerNames);
+    }
+
+    private List<String> findCustomersByLimits(List<TrafficData> trafficDataList, String limitTypeName) {
+        return trafficDataList.stream()
+                .filter(trafficData -> trafficData.getLimitTypeName().equals(limitTypeName))
+                .map(TrafficData::getCustomerName)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private Map<String, Integer> countLimitTypesActivities(List<TrafficData> trafficDataList) {
@@ -51,23 +76,6 @@ public class TaskServiceImpl implements TaskService {
             }
         }
         return uniqueLimitTypes;
-    }
-
-    private List<String> findCustomersByLimits(List<TrafficData> trafficDataList, String limitTypeName) {
-        return trafficDataList.stream()
-                .filter(trafficData -> trafficData.getLimitTypeName().equals(limitTypeName))
-                .map(TrafficData::getCustomerName)
-                .distinct()
-                .collect(Collectors.toList());
-    }
-
-    private List<TrafficData> createTrafficDataList(List<String> fileRecords) {
-        List<TrafficData> trafficData = new ArrayList<>();
-        for (String record : fileRecords) {
-            List<String> argumentsInRecord = ListUtils.splitArgumentsInRecord(record);
-            trafficData.add(buildTrafficData(argumentsInRecord));
-        }
-        return trafficData;
     }
 
     private TrafficData buildTrafficData(List<String> recordArguments) {
