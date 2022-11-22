@@ -7,6 +7,7 @@ public class TrafficDataFileParams {
     public static final String LIMIT_TYPE_LIMIT_MOVEMENT = "огранич.движения";
     public static final String RECORDS_SPLIT_REGEX = ",";
     public static final String RECORD_COMPLEX_FIELD_REGEX = "\"";
+    public static final String NO_INFO_RECORD_VALUE = "-";
     public static final int CUSTOMER_NAME_COLUMN_NUMBER = 2;
     public static final int LIMIT_TYPE_NAME_COLUMN_NUMBER = 8;
     public static final int WORK_TYPE_NAME_COLUMN_NUMBER = 9;

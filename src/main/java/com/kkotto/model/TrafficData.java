@@ -15,6 +15,10 @@ public class TrafficData {
         return customerName;
     }
 
+    public String getTermClarification() {
+        return termClarification;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %s %s %s",

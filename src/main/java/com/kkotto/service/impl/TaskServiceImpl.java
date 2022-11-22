@@ -41,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
 
     private void writeTopCustomersToFile(List<TrafficData> trafficDataList) {
         File resultTopCustomersFile = new File(TrafficDataFileParams.RESULT_TOP_CUSTOMERS_FILE_PATH);
-        List<String> customerNames = TrafficDataUtils.findTopCustomersByTerm(trafficDataList, TrafficDataFileParams.TOP_CUSTOMERS_VALUE);
+        List<String> customerNames = TrafficDataUtils.findTopCustomersByTermClarifications(trafficDataList, TrafficDataFileParams.TOP_CUSTOMERS_VALUE);
         FileUtils.writeToFile(resultTopCustomersFile, customerNames);
     }
 }
